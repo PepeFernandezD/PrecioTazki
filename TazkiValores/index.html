@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcular Cotización</title>
+  <style>
+    * {
+      font-family: 'Helvetica', sans-serif;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 50%;
+      margin: auto;
+      border-radius: 15px;
+      padding: 20px;
+      background-color: #f8f8f8;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .title {
+      color: #9b59b6;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .input {
+      width: 100%;
+      display: block;
+      padding: 15px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .buttons {
+      text-align: right;
+    }
+    .button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #9b59b6;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    .button.secondary {
+      background-color: #d3d3d3;
+      color: #6e6e6e;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .result-container {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .result {
+      font-size: 30px;
+      font-weight: bold;
+      color: #9b59b6;
+      margin-bottom: 10px;
+    }
+    .sub-result {
+      font-size: 20px;
+      color: #333;
+      margin-top: 10px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    .details {
+      font-size: 18px;
+      color: #555;
+      text-align: left;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #d3d3d3;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container" class="container">
+    <h1 class="title">Calcular Cotización</h1>
+    <div class="divider"></div>
+    <div id="step-1" class="step active">
+      <label for="rubro">¿Qué rubro es la empresa?</label>
+      <select id="rubro" class="input">
+        <option value="">Seleccione el Rubro</option>
+        <option value="A - AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA">A - AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA</option>
+        <option value="B - PESCA">B - PESCA</option>
+        <option value="C - EXPLOTACION DE MINAS Y CANTERAS">C - EXPLOTACION DE MINAS Y CANTERAS</option>
+        <option value="D - INDUSTRIAS MANUFACTURERAS NO METALICAS">D - INDUSTRIAS MANUFACTURERAS NO METALICAS</option>
+        <option value="E - INDUSTRIAS MANUFACTURERAS METALICAS">E - INDUSTRIAS MANUFACTURERAS METALICAS</option>
+        <option value="F - SUMINISTRO DE ELECTRICIDAD, GAS Y AGUA ">F- SUMINISTRO DE ELECTRICIDAD, GAS Y AGUA</option>
+        <option value="G - CONSTRUCCION">G - CONSTRUCCION</option>
+        <option value="H - COMERCIO AL POR MAYOR Y MENOR, REP. VEH.AUTOMOTORES/ENSERES DOMESTICOS">H - COMERCIO AL POR MAYOR Y MENOR, REP. VEH.AUTOMOTORES/ENSERES DOMESTICOS</option>
+        <option value="I - HOTELES Y RESTAURANTES">I - HOTELES Y RESTAURANTES</option>
+        <option value="J - TRANSPORTE, ALMACENAMIENTO Y COMUNICACIONES">J - TRANSPORTE, ALMACENAMIENTO Y COMUNICACIONES</option>
+        <option value="K - INTERMEDIACION FINANCIERA">K - INTERMEDIACION FINANCIERA</option>
+        <option value="L - ACTIVIDADES INMOBILIARIAS, EMPRESARIALES Y DE ALQUILER">L - ACTIVIDADES INMOBILIARIAS, EMPRESARIALES Y DE ALQUILER</option>
+        <option value="N - ENSEÑANZA">N - ENSEÑANZA</option>
+        <option value="O - SERVICIOS SOCIALES Y DE SALUD">O - SERVICIOS SOCIALES Y DE SALUD</option>
+        <option value="P - OTRAS ACTIVIDADES DE SERVICIOS COMUNITARIAS, SOCIALES Y PERSONALES">P - OTRAS ACTIVIDADES DE SERVICIOS COMUNITARIAS, SOCIALES Y PERSONALES</option>
+      </select>
+      <div class="buttons">
+        <button id="next-1" class="button">Siguiente</button>
+      </div>
+    </div>
+    <div id="step-2" class="step">
+      <label for="colaboradores">¿Cuántos colaboradores tiene la empresa?</label>
+      <input type="number" id="colaboradores" class="input" min="1">
+      <div class="buttons">
+        <button id="prev-2" class="button secondary">Anterior</button>
+        <button id="next-2" class="button">Siguiente</button>
+      </div>
+    </div>
+    <div id="step-3" class="step">
+      <label for="centros">¿Cuántos centros de trabajo tiene la empresa?</label>
+      <input type="number" id="centros" class="input" min="1">
+      <div class="buttons">
+        <button id="prev-3" class="button secondary">Anterior</button>
+        <button id="next-3" class="button">Siguiente</button>
+      </div>
+    </div>
+    <div id="step-4" class="step">
+      <label for="solucion">¿Qué soluciones precisa?</label>
+      <select id="solucion" class="input">
+        <option value="">Seleccione la Solución</option>
+        <option value="PLAN COMERCIAL">PLAN COMERCIAL</option>
+        <option value="PLAN AVANZADO">PLAN AVANZADO</option>
+        <option value="MODULARIZADO">MODULARIZADO</option>
+      </select>
+      <div class="buttons">
+        <button id="prev-4" class="button secondary">Anterior</button>
+        <button id="next-4" class="button">Siguiente</button>
+      </div>
+    </div>
+    <div id="step-5" class="step">
+      <div class="multiselect-container">
+        <label><input type="checkbox" value="PROGRAMA PERSONALIZADO"> Programa Personalizado (80.4%)</label>
+        <label><input type="checkbox" value="PROGRAMA INDUCCIONES"> Programa Inducciones (43.2%)</label>
+        <label><input type="checkbox" value="PROGRAMA CHARLAS CAPACITACIONES"> Programa Charlas y Capacitaciones (31.7%)</label>
+        <label><input type="checkbox" value="PROGRAMA GESTION HALLAZGOS"> Programa Gestión de Hallazgos (43.2%)</label>
+        <label><input type="checkbox" value="PROGRAMA INSPECCIONES"> Programa Inspecciones (65%)</label>
+        <label><input type="checkbox" value="PROGRAMA INSUMO MAQUINARIA"> Programa Insumo y Maquinaria (65%)</label>
+        <label><input type="checkbox" value="PROGRAMA INVESTIGACION ACCIDENTES"> Programa Investigación de Accidentes (24%)</label>
+        <label><input type="checkbox" value="PROGRAMA ART AST CHARLA DIARIA"> Programa ART/AST y Charla Diaria (31.7%)</label>
+        <label><input type="checkbox" value="PROGRAMA PEC"> Programa PEC (80.4%)</label>
+        <label><input type="checkbox" value="PROGRAMA EPP"> Programa EPP (43.2%)</label>
+        <label><input type="checkbox" value="PROGRAMA CONTRATISTAS"> Programa Contratistas (43.2%)</label>
+      </div>
+      <div class="buttons">
+        <button id="prev-5" class="button secondary">Anterior</button>
+        <button id="next-5" class="button">Siguiente</button>
+      </div>
+    </div>
+    <div id="step-6" class="step">
+      <div class="details" id="details"></div>
+      <div class="divider"></div>
+      <div class="result-container">
+        <p id="result" class="result"></p>
+        <p id="sub-result" class="sub-result"></p>
+        <p id="modularizado-excedido" class="sub-result"></p>
+      </div>
+      <div class="divider"></div>
+      <div class="additional-info">
+        <p><strong>VALORES SI FUERA:</strong></p>
+        <p>PLAN COMERCIAL: <span id="valor_plan_comercial"></span> UF (El Valor Total aumenta si es Minería)</p>
+        <p>PLAN AVANZADO: <span id="valor_plan_avanzado"></span> UF (x1,3)</p>
+        <p>PLAN MODULARIZADO (sin ajuste): <span id="valor_modularizado_excedido"></span> UF</p>
+      </div>
+      <div class="divider"></div>
+      <div class="button-container">
+        <button id="restart" class="button secondary">Otra Cotización</button>
+        <button id="finalizar" class="button">¡Gracias Pepe!</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+    let currentStep = 0;
+
+    function showStep(index) {
+      steps.forEach((step, idx) => {
+        step.classList.toggle('active', idx === index);
+      });
+      currentStep = index;
+    }
+
+    document.getElementById('next-1').addEventListener('click', () => {
+      const rubro = document.getElementById('rubro').value;
+      if (rubro) {
+        showStep(1);
+      } else {
+        alert('Debe seleccionar un rubro.');
+      }
+    });
+
+    document.getElementById('next-2').addEventListener('click', () => {
+      const colaboradores = document.getElementById('colaboradores').value;
+      if (colaboradores > 0) {
+        showStep(2);
+      } else {
+        alert('Debe ingresar un número entero mayor que 0.');
+      }
+    });
+
+    document.getElementById('next-3').addEventListener('click', () => {
+      const centros = document.getElementById('centros').value;
+      if (centros > 0) {
+        showStep(3);
+      } else {
+        alert('Debe ingresar un número entero mayor que 0.');
+      }
+    });
+
+    document.getElementById('next-4').addEventListener('click', () => {
+      const solucion = document.getElementById('solucion').value;
+      if (solucion === "MODULARIZADO") {
+        showStep(4);
+      } else if (solucion) {
+        submitQuotation();
+      } else {
+        alert('Debe seleccionar una solución.');
+      }
+    });
+
+    document.getElementById('next-5').addEventListener('click', () => {
+      submitQuotation();
+    });
+
+    async function submitQuotation() {
+      const solucion = document.getElementById('solucion').value;
+      const rubro = document.getElementById('rubro').value;
+      const colaboradores = document.getElementById('colaboradores').value;
+      const centros = document.getElementById('centros').value;
+      const modulos = Array.from(document.querySelectorAll('.multiselect-container input:checked')).map(input => input.value);
+
+      try {
+        const response = await fetch('http://localhost:5000/api/quotation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            rubro: rubro,
+            colaboradores: parseInt(colaboradores),
+            centros: parseInt(centros),
+            solucion: solucion,
+            modulos: modulos
+          }),
+        });
+
+        if (response.ok) {
+          const resultData = await response.json();
+          let solucionDetails = solucion;
+          if (solucion === "MODULARIZADO" && modulos.length > 0) {
+            solucionDetails += ` - ${modulos.join(', ')}`;
+          }
+          document.getElementById('details').innerHTML = `<b>RUBRO:</b> ${rubro}<br>
+<b>COLABORADORES:</b> ${colaboradores}<br>
+<b>CENTROS DE TRABAJO:</b> ${centros}<br>
+<b>SOLUCIONES:</b> ${solucionDetails}`;
+          document.getElementById('result').innerText = `VALOR TOTAL: ${resultData.valor_total.toFixed(2)} UF`;
+          document.getElementById('sub-result').innerText = `VALOR POR CENTRO DE TRABAJO: ${resultData.valor_por_centro.toFixed(2)} UF`;
+          document.getElementById('valor_plan_comercial').innerText = resultData.valor_plan_comercial.toFixed(2);
+          document.getElementById('valor_plan_avanzado').innerText = resultData.valor_plan_avanzado.toFixed(2);
+          document.getElementById('valor_modularizado_excedido').innerText = resultData.modularizado_excedido ? resultData.modularizado_excedido.toFixed(2) : 'N/A';
+          showStep(5);
+        } else {
+          alert('Hubo un error en el cálculo de la cotización. Intente nuevamente.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('No se pudo conectar con el servidor. Asegúrese de que el backend está corriendo.');
+      }
+    }
+
+    document.getElementById('restart').addEventListener('click', () => {
+      window.location.reload();
+    });
+
+    document.getElementById('finalizar').addEventListener('click', () => {
+      alert('Gracias por usar nuestra calculadora de cotización. ¡Hasta luego!');
+      window.close();
+    });
+
+    document.querySelectorAll('.button.secondary').forEach((btn, index) => {
+      btn.addEventListener('click', () => showStep(index));
+    });
+
+    showStep(0);
+  </script>
+</body>
+</html>
